@@ -1160,161 +1160,264 @@ namespace Demo12_DevBotAuth4EchoBot.Bots
 
                     if (reasonintent == "Schedule")
                     {
+
+                        //******************
                         UAT_LUIS_Entity UAT_LUIS = await GetEntityFromLUIS(turnContext.Activity.Text);
                         List<string> entityList = new List<string>();
-                        //String HourFromTime = "", HourToTime = "", MinToTime = "", MinFromTime = "";
+                        String HourFromTime = "", HourToTime = "", MinToTime = "", MinFromTime = "", checkspecificdate = "";
+                        String FromTime = "", ToTime = "", FromTimeHour = "", FromTimeMin = "", ToTimeHour = "", ToTimeMin = "";
                         for (int i = 0; i < UAT_LUIS.entities.Length; i++)
                         {
-
+                            entityList.Add(UAT_LUIS.entities[i].type.ToString().ToLower());
+                            if (UAT_LUIS.entities[i].type.ToString().ToLower() == "room")
+                            {
+                                roomluisname = UAT_LUIS.entities[i].entity.ToString().ToLower();
+                            }
 
                             if (UAT_LUIS.entities[i].type.ToString().ToLower() == "date")
                             {
                                 dateluis = UAT_LUIS.entities[i].entity.ToString().ToLower();
+                                checkspecificdate = "true"
+;
                             }
 
+                            if (UAT_LUIS.entities[i].type.ToString().ToLower() == "today")
+                            {
+                                dateluis = UAT_LUIS.entities[i].entity.ToString().ToLower();
+                            }
+
+                            if (UAT_LUIS.entities[i].type.ToString().ToLower() == "the day after tomorrow")
+                            {
+                                dateluis = UAT_LUIS.entities[i].entity.ToString().ToLower();
+                            }
+                            if (UAT_LUIS.entities[i].type.ToString().ToLower() == "tomorrow")
+                            {
+                                dateluis = UAT_LUIS.entities[i].entity.ToString().ToLower();
+                            }
+
+
+
+
+                        }
+
+                        String d = dateluis;
+
+
+                        if (checkspecificdate == "true")
+                        {
+                            datevar = Convert.ToDateTime(dateluis);
+                        }
+                        else if (dateluis == "today")
+                        {
+                            datevar = DateTime.Today;
+                        }
+                        else if (dateluis == "tomorrow")
+                        {
+                            datevar = DateTime.Today.AddDays(1);
+                        }
+                        else if (dateluis == "the day after tomorrow" || dateluis.Contains("day after tomorrow"))
+                        {
+                            datevar = DateTime.Today.AddDays(2);
+                        }
+                        else
+                        {
+                            datevar = DateTime.Today;
+                        }
+
+
+                        DateTime dateobject;
+                        String datestring = "";
+                        if (DateTime.TryParse(datevar.ToString(), out dateobject))
+                        {
+
+                            datestring = dateobject.ToString("yyyy-MM-ddT");
+
+                        }
+
+                        string datevarparticularstart = datestring + "00" + ":" + "00" + ":" + "01-08:00";
+                        string datevarparticularend = datestring + "23" + ":" + "59" + ":" + "00-08:00";
+                        var queryparticulardate = new List<QueryOption>()
+                        {
+                            new QueryOption("startDateTime", datevarparticularstart),
+                            new QueryOption("endDateTime", datevarparticularend)
+                        };
+
+                        var calendarViewparticulardate = await graphClient.Me.CalendarView
+                            .Request(queryparticulardate)
+                            .GetAsync();
+                        String luiscalenderentity = "";
+
+
+                        //***********************
+
+
+
+
+
+
+                        //                        UAT_LUIS_Entity UAT_LUIS = await GetEntityFromLUIS(turnContext.Activity.Text);
+                        //                        List<string> entityList = new List<string>();
+                        //                        //String HourFromTime = "", HourToTime = "", MinToTime = "", MinFromTime = "";
+                        //                        for (int i = 0; i < UAT_LUIS.entities.Length; i++)
+                        //                        {
+
+
+                        //                            if (UAT_LUIS.entities[i].type.ToString().ToLower() == "date")
+                        //                            {
+                        //                                dateluis = UAT_LUIS.entities[i].entity.ToString().ToLower();
+                        //                            }
+
+                        //                        }
+
+
+
+
+
+
+
+                        //                        if (dateluis != null)
+                        //                        {
+
+
+
+
+                        //                            DateTime starttimenew1 = Convert.ToDateTime(dateluis);
+                        //                            DateTime dtobj23;
+                        //                            String newDateTime111 = "";
+                        //                            if (DateTime.TryParse(starttimenew1.ToString(), out dtobj23))
+                        //                            {
+
+                        //                                newDateTime111 = dtobj23.ToString("yyyy-MM-ddT");
+
+                        //                            }
+
+                        //                            String try1 = newDateTime111;
+
+
+
+                        //                            string datevarparticularstart = try1 + "00" + ":" + "00" + ":" + "01-08:00";
+                        //                            string datevarparticularend = try1 + "23" + ":" + "59" + ":" + "00-08:00";
+
+                        //                            var queryparticulardate = new List<QueryOption>()
+                        //{
+                        //    new QueryOption("startDateTime", datevarparticularstart),
+                        //    new QueryOption("endDateTime", datevarparticularend)
+                        //};
+
+                        //                            var calendarViewparticulardate = await graphClient.Me.CalendarView
+                        //                                .Request(queryparticulardate)
+                        //                                .GetAsync();
+                        //                            String luiscalenderentity = "";
+
+
+
+
+
+
+                        //                            DateTime t = DateTime.Today;
+                        //                            string newDateTime = "";
+                        //                            DateTime dt;
+                        //                            if (DateTime.TryParse(t.ToString(), out dt))
+                        //                            {
+
+                        //                                newDateTime = dt.ToString("yyyy-MM-dd");
+                        //                            }
+
+                        //                            String starttimeluis = newDateTime;
+
+                        for (int i = 0; i < UAT_LUIS.entities.Length; i++)
+                        {
+                            entityList.Add(UAT_LUIS.entities[i].type.ToString().ToLower());
+                            if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("tulip"))
+                            {
+                                luiscalenderentity = "tulip";
+
+                            }
+
+                            else if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("lotus"))
+                            {
+                                luiscalenderentity = "lotus";
+
+                            }
+
+                            else if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("snowdrop"))
+                            {
+                                luiscalenderentity = "snowdrop";
+
+                            }
+                            else if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("chanyaky"))
+                            {
+                                luiscalenderentity = "chanyaky";
+
+                            }
+                        }
+
+                        string boolvarcheck = "";
+
+                        if (calendarViewparticulardate.Count!=0)
+                        {
+
+                     
+                        for (int i = 0; i < calendarViewparticulardate.Count; i++)
+                        {
+
+
+                            if (calendarViewparticulardate[i].Location.DisplayName.ToLower().Contains(luiscalenderentity))
+                            {
+                                boolvarcheck = "true";
+
+                                string converttostring1 = "";
+                                DateTime date1;
+                                if (DateTime.TryParse(calendarViewparticulardate[i].Start.DateTime.ToString(), out date1))
+                                {
+
+                                    converttostring1 = date1.ToString("HH:mm:ss");
+                                }
+
+                                String vartime1 = converttostring1;
+
+
+                                string converttostring2 = "";
+                                DateTime date2;
+                                if (DateTime.TryParse(calendarViewparticulardate[i].End.DateTime.ToString(), out date2))
+                                {
+
+                                    converttostring2 = date2.ToString("HH:mm:ss");
+                                }
+
+                                String vartime2 = converttostring2;
+
+
+                                EventNameschedule.Add(new AdaptiveTextBlock()
+                                {
+                                    Text = calendarViewparticulardate[i].Location.DisplayName,
+                                    Size = AdaptiveTextSize.Small,
+                                    Color = AdaptiveTextColor.Accent
+                                });
+                                Eventschedulestart.Add(new AdaptiveTextBlock()
+                                {
+                                    Text = vartime1,
+                                    Size = AdaptiveTextSize.Small,
+                                    Color = AdaptiveTextColor.Accent
+                                });
+                                Eventscheduleend.Add(new AdaptiveTextBlock()
+                                {
+                                    Text = vartime2,
+                                    Size = AdaptiveTextSize.Small,
+                                    Color = AdaptiveTextColor.Accent
+                                });
+                                Eventschedulesubject.Add(new AdaptiveTextBlock()
+                                {
+                                    Text = calendarViewparticulardate[i].Subject,
+                                    Size = AdaptiveTextSize.Small,
+                                    Color = AdaptiveTextColor.Accent
+                                });
+                            }
                         }
 
 
 
-
-
-
-
-                        if (dateluis != null)
-                        {
-
-
-
-
-                            DateTime starttimenew1 = Convert.ToDateTime(dateluis);
-                            DateTime dtobj23;
-                            String newDateTime111 = "";
-                            if (DateTime.TryParse(starttimenew1.ToString(), out dtobj23))
-                            {
-
-                                newDateTime111 = dtobj23.ToString("yyyy-MM-ddT");
-
-                            }
-
-                            String try1 = newDateTime111;
-
-
-
-                            string datevarparticularstart = try1 + "00" + ":" + "00" + ":" + "01-08:00";
-                            string datevarparticularend = try1 + "23" + ":" + "59" + ":" + "00-08:00";
-
-                            var queryparticulardate = new List<QueryOption>()
-{
-    new QueryOption("startDateTime", datevarparticularstart),
-    new QueryOption("endDateTime", datevarparticularend)
-};
-
-                            var calendarViewparticulardate = await graphClient.Me.CalendarView
-                                .Request(queryparticulardate)
-                                .GetAsync();
-                            String luiscalenderentity = "";
-
-
-                        
-
-
-
-                            DateTime t = DateTime.Today;
-                            string newDateTime = "";
-                            DateTime dt;
-                            if (DateTime.TryParse(t.ToString(), out dt))
-                            {
-
-                                newDateTime = dt.ToString("yyyy-MM-dd");
-                            }
-
-                            String starttimeluis = newDateTime;
-
-                            for (int i = 0; i < UAT_LUIS.entities.Length; i++)
-                            {
-                                entityList.Add(UAT_LUIS.entities[i].type.ToString().ToLower());
-                                if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("tulip"))
-                                {
-                                    luiscalenderentity = "tulip";
-
-                                }
-
-                                else if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("lotus"))
-                                {
-                                    luiscalenderentity = "lotus";
-
-                                }
-
-                                else if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("snowdrop"))
-                                {
-                                    luiscalenderentity = "snowdrop";
-
-                                }
-                                else if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("chanyaky"))
-                                {
-                                    luiscalenderentity = "chanyaky";
-
-                                }
-                            }
-
-
-                            string boolvarcheck = "";
-                            for (int i = 0; i < calendarViewparticulardate.Count; i++)
-                            {
-
-
-                                if (calendarViewparticulardate[i].Location.DisplayName.ToLower().Contains(luiscalenderentity))
-                                {
-                                    boolvarcheck = "true";
-
-                                    string converttostring1 = "";
-                                    DateTime date1;
-                                    if (DateTime.TryParse(calendarViewparticulardate[i].Start.DateTime.ToString(), out date1))
-                                    {
-
-                                        converttostring1 = date1.ToString("HH:mm:ss");
-                                    }
-
-                                    String vartime1 = converttostring1;
-
-
-                                    string converttostring2 = "";
-                                    DateTime date2;
-                                    if (DateTime.TryParse(calendarViewparticulardate[i].End.DateTime.ToString(), out date2))
-                                    {
-
-                                        converttostring2 = date2.ToString("HH:mm:ss");
-                                    }
-
-                                    String vartime2 = converttostring2;
-
-
-                                    EventNameschedule.Add(new AdaptiveTextBlock()
-                                    {
-                                        Text = calendarViewparticulardate[i].Location.DisplayName,
-                                        Size = AdaptiveTextSize.Small,
-                                        Color = AdaptiveTextColor.Accent
-                                    });
-                                    Eventschedulestart.Add(new AdaptiveTextBlock()
-                                    {
-                                        Text = vartime1,
-                                        Size = AdaptiveTextSize.Small,
-                                        Color = AdaptiveTextColor.Accent
-                                    });
-                                    Eventscheduleend.Add(new AdaptiveTextBlock()
-                                    {
-                                        Text = vartime2,
-                                        Size = AdaptiveTextSize.Small,
-                                        Color = AdaptiveTextColor.Accent
-                                    });
-                                    Eventschedulesubject.Add(new AdaptiveTextBlock()
-                                    {
-                                        Text = calendarViewparticulardate[i].Subject,
-                                        Size = AdaptiveTextSize.Small,
-                                        Color = AdaptiveTextColor.Accent
-                                    });
-                                }
-                            }
+                          
 
                             if (boolvarcheck == "true")
                             {
@@ -1323,155 +1426,155 @@ namespace Demo12_DevBotAuth4EchoBot.Bots
 
 
                                     Items = new List<AdaptiveElement>()
-                    {
+                                                {
 
 
 
 
-                          new AdaptiveColumnSet()
-                            {
-                                Type = "ColumnSet",
-                                Height = AdaptiveHeight.Auto,
-                                Columns=new List<AdaptiveColumn> ()
-                                {
-                                  new AdaptiveColumn()
-                                  {
-                                      Type="Column",
-                                      Width="200px",
+                                                      new AdaptiveColumnSet()
+                                                        {
+                                                            Type = "ColumnSet",
+                                                            Height = AdaptiveHeight.Auto,
+                                                            Columns=new List<AdaptiveColumn> ()
+                                                            {
+                                                              new AdaptiveColumn()
+                                                              {
+                                                                  Type="Column",
+                                                                  Width="200px",
 
-                                      Items=new List<AdaptiveElement>()
-                                      {
+                                                                  Items=new List<AdaptiveElement>()
+                                                                  {
 
-                                          new AdaptiveTextBlock()
-                                          {
-                                              Type="TextBlock",
-                                              Text=luiscalenderentity+" Conference Hall",
-                                               Weight=AdaptiveTextWeight.Bolder,
-                                               Color=AdaptiveTextColor.Good
-                                          }
-                                      }
-                                  }  ,
-                                  new AdaptiveColumn()
-                                  {
-                                      Type="Column",
-                                      Width="150px",
-                                      Items=new List<AdaptiveElement>()
-                                      {
-                                          new AdaptiveTextBlock()
-                                          {
-                                              Type="TextBlock",
-                                              Text=try1,
-                                               Weight=AdaptiveTextWeight.Bolder,
-                                               Color = AdaptiveTextColor.Good
+                                                                      new AdaptiveTextBlock()
+                                                                      {
+                                                                          Type="TextBlock",
+                                                                          Text=luiscalenderentity+" Conference Hall",
+                                                                           Weight=AdaptiveTextWeight.Bolder,
+                                                                           Color=AdaptiveTextColor.Good
+                                                                      }
+                                                                  }
+                                                              }  ,
+                                                              new AdaptiveColumn()
+                                                              {
+                                                                  Type="Column",
+                                                                  Width="150px",
+                                                                  Items=new List<AdaptiveElement>()
+                                                                  {
+                                                                      new AdaptiveTextBlock()
+                                                                      {
+                                                                          Type="TextBlock",
+                                                                          Text=DateTime.Today.ToString("dd-MM-yyyy"),
+                                                                           Weight=AdaptiveTextWeight.Bolder,
+                                                                           Color = AdaptiveTextColor.Good
 
-                                          }
-                                      }
-                                  },
+                                                                      }
+                                                                  }
+                                                              },
 
-                                 }
-                          },
+                                                             }
+                                                      },
 
-                          new AdaptiveColumnSet()
-                            {
-                                Type = "ColumnSet",
-                                Height = AdaptiveHeight.Auto,
-                                Columns=new List<AdaptiveColumn> ()
-                                {
-                                  new AdaptiveColumn()
-                                  {
-                                      Type="Column",
-                                      Width="200px",
+                                                      new AdaptiveColumnSet()
+                                                        {
+                                                            Type = "ColumnSet",
+                                                            Height = AdaptiveHeight.Auto,
+                                                            Columns=new List<AdaptiveColumn> ()
+                                                            {
+                                                              new AdaptiveColumn()
+                                                              {
+                                                                  Type="Column",
+                                                                  Width="200px",
 
-                                      Items=new List<AdaptiveElement>()
-                                      {
+                                                                  Items=new List<AdaptiveElement>()
+                                                                  {
 
-                                          new AdaptiveTextBlock()
-                                          {
-                                              Type="TextBlock",
-                                              Text="Name",
-                                               Weight=AdaptiveTextWeight.Bolder,
-                                               Color=AdaptiveTextColor.Good
-                                          }
-                                      }
-                                  }  ,
-                                  new AdaptiveColumn()
-                                  {
-                                      Type="Column",
-                                      Width="80px",
-                                      Items=new List<AdaptiveElement>()
-                                      {
-                                          new AdaptiveTextBlock()
-                                          {
-                                              Type="TextBlock",
-                                              Text="Start Time",
-                                               Weight=AdaptiveTextWeight.Bolder,
-                                               Color = AdaptiveTextColor.Good
+                                                                      new AdaptiveTextBlock()
+                                                                      {
+                                                                          Type="TextBlock",
+                                                                          Text="Name",
+                                                                           Weight=AdaptiveTextWeight.Bolder,
+                                                                           Color=AdaptiveTextColor.Good
+                                                                      }
+                                                                  }
+                                                              }  ,
+                                                              new AdaptiveColumn()
+                                                              {
+                                                                  Type="Column",
+                                                                  Width="80px",
+                                                                  Items=new List<AdaptiveElement>()
+                                                                  {
+                                                                      new AdaptiveTextBlock()
+                                                                      {
+                                                                          Type="TextBlock",
+                                                                          Text="Start Time",
+                                                                           Weight=AdaptiveTextWeight.Bolder,
+                                                                           Color = AdaptiveTextColor.Good
 
-                                          }
-                                      }
-                                  },
-                                  new AdaptiveColumn()
-                                  {
-                                      Type="Column",
-                                      Width="80px",
-                                      Items=new List<AdaptiveElement>()
-                                      {
-                                          new AdaptiveTextBlock()
-                                          {
-                                              Type="TextBlock",
-                                              Text="End Time",
-                                               Weight=AdaptiveTextWeight.Bolder,
-                                               Color = AdaptiveTextColor.Good
+                                                                      }
+                                                                  }
+                                                              },
+                                                              new AdaptiveColumn()
+                                                              {
+                                                                  Type="Column",
+                                                                  Width="80px",
+                                                                  Items=new List<AdaptiveElement>()
+                                                                  {
+                                                                      new AdaptiveTextBlock()
+                                                                      {
+                                                                          Type="TextBlock",
+                                                                          Text="End Time",
+                                                                           Weight=AdaptiveTextWeight.Bolder,
+                                                                           Color = AdaptiveTextColor.Good
 
-                                          }
-                                      }
-                                  },
+                                                                      }
+                                                                  }
+                                                              },
 
-                                 }
-                          },
-
-
-
-
-                        new AdaptiveColumnSet()
-                        {
-                            Type = "ColumnSet",
-                            Height = AdaptiveHeight.Auto,
-
-                            Columns=new List<AdaptiveColumn> ()
-                            {
-
-
-                              new AdaptiveColumn()
-                              {
-                                  Type="Column",
-                                  Width="200px",
-                                  Items=Eventschedulesubject,
-
-
-                              },
-
-                               new AdaptiveColumn()
-                                  {
-                                      Type="Column",
-                                      Width="80px",
-                                     Items= Eventschedulestart,
-                                  },
-
-                                 new AdaptiveColumn()
-                              {
-                                  Type="Column",
-                                  Width="80px",
-                                 Items= Eventscheduleend,
-                              }
+                                                             }
+                                                      },
 
 
 
-                            }
+
+                                                    new AdaptiveColumnSet()
+                                                    {
+                                                        Type = "ColumnSet",
+                                                        Height = AdaptiveHeight.Auto,
+
+                                                        Columns=new List<AdaptiveColumn> ()
+                                                        {
 
 
-                        },
-                    }
+                                                          new AdaptiveColumn()
+                                                          {
+                                                              Type="Column",
+                                                              Width="200px",
+                                                              Items=Eventschedulesubject,
+
+
+                                                          },
+
+                                                           new AdaptiveColumn()
+                                                              {
+                                                                  Type="Column",
+                                                                  Width="80px",
+                                                                 Items= Eventschedulestart,
+                                                              },
+
+                                                             new AdaptiveColumn()
+                                                          {
+                                                              Type="Column",
+                                                              Width="80px",
+                                                             Items= Eventscheduleend,
+                                                          }
+
+
+
+                                                        }
+
+
+                                                    },
+                                                }
                                 });
                             }
 
@@ -1482,372 +1585,92 @@ namespace Demo12_DevBotAuth4EchoBot.Bots
 
 
                                     Items = new List<AdaptiveElement>()
-                    {
+                                                {
 
 
 
 
-                          new AdaptiveColumnSet()
-                            {
-                                Type = "ColumnSet",
-                                Height = AdaptiveHeight.Auto,
-                                Columns=new List<AdaptiveColumn> ()
-                                {
-                                  new AdaptiveColumn()
-                                  {
-                                      Type="Column",
-                                      Width="500px",
+                                                      new AdaptiveColumnSet()
+                                                        {
+                                                            Type = "ColumnSet",
+                                                            Height = AdaptiveHeight.Auto,
+                                                            Columns=new List<AdaptiveColumn> ()
+                                                            {
+                                                              new AdaptiveColumn()
+                                                              {
+                                                                  Type="Column",
+                                                                  Width="500px",
 
-                                      Items=new List<AdaptiveElement>()
-                                      {
+                                                                  Items=new List<AdaptiveElement>()
+                                                                  {
 
-                                          new AdaptiveTextBlock()
-                                          {
-                                              Type="TextBlock",
-                                              Text=" No scheduling for "+luiscalenderentity+" hall",
-                                               Weight=AdaptiveTextWeight.Bolder,
-                                               Color=AdaptiveTextColor.Good
-                                          }
-                                      }
-                                  }
-
-
-                                 }
-                          },
+                                                                      new AdaptiveTextBlock()
+                                                                      {
+                                                                          Type="TextBlock",
+                                                                          Text=" No scheduling for "+luiscalenderentity+" hall",
+                                                                           Weight=AdaptiveTextWeight.Bolder,
+                                                                           Color=AdaptiveTextColor.Good
+                                                                      }
+                                                                  }
+                                                              }
 
 
+                                                             }
+                                                      },
 
 
 
 
 
 
-                    }
+
+
+                                                }
                                 });
                             }
 
-                            var attachment1 = new Microsoft.Bot.Schema.Attachment
-                            {
-                                ContentType = AdaptiveCard.ContentType,
-                                Content = card,
-                            };
-                            var reply1 = MessageFactory.Attachment(attachment1);
-                            await turnContext.SendActivityAsync(reply1, cancellationToken);
+
                         }
 
                         else
                         {
-                            String luiscalenderentity = "";
-
-
-                            var queryOptions = new List<QueryOption>()
-            {
-                new QueryOption("startDateTime", "2020-02-20T00:00:01-08:00"),
-                new QueryOption("endDateTime", "2020-02-20T23:59:59-08:00")
-            };
-
-                            var calendarView = await graphClient.Me.Calendar.CalendarView
-                                .Request(queryOptions)
-                                .GetAsync();
-
-
-
-
-                            DateTime t = DateTime.Today;
-                            string newDateTime = "";
-                            DateTime dt;
-                            if (DateTime.TryParse(t.ToString(), out dt))
-                            {
-
-                                newDateTime = dt.ToString("yyyy-MM-dd");
-                            }
-
-                            String starttimeluis = newDateTime;
-
-                            for (int i = 0; i < UAT_LUIS.entities.Length; i++)
-                            {
-                                entityList.Add(UAT_LUIS.entities[i].type.ToString().ToLower());
-                                if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("tulip"))
-                                {
-                                    luiscalenderentity = "tulip";
-
-                                }
-
-                                else if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("lotus"))
-                                {
-                                    luiscalenderentity = "lotus";
-
-                                }
-
-                                else if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("snowdrop"))
-                                {
-                                    luiscalenderentity = "snowdrop";
-
-                                }
-                                else if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("chanyaky"))
-                                {
-                                    luiscalenderentity = "chanyaky";
-
-                                }
-                            }
-
-
-                            string boolvarcheck = "";
-                            for (int i = 0; i < calendarView.Count; i++)
+                            card.Body.Add(new AdaptiveContainer()
                             {
 
 
-                                if (calendarView[i].Location.DisplayName.ToLower().Contains(luiscalenderentity))
-                                {
-                                    boolvarcheck = "true";
-
-                                    string converttostring1 = "";
-                                    DateTime date1;
-                                    if (DateTime.TryParse(calendarView[i].Start.DateTime.ToString(), out date1))
-                                    {
-
-                                        converttostring1 = date1.ToString("HH:mm:ss");
-                                    }
-
-                                    String vartime1 = converttostring1;
-
-
-                                    string converttostring2 = "";
-                                    DateTime date2;
-                                    if (DateTime.TryParse(calendarView[i].End.DateTime.ToString(), out date2))
-                                    {
-
-                                        converttostring2 = date2.ToString("HH:mm:ss");
-                                    }
-
-                                    String vartime2 = converttostring2;
-
-
-                                    EventNameschedule.Add(new AdaptiveTextBlock()
-                                    {
-                                        Text = calendarView[i].Location.DisplayName,
-                                        Size = AdaptiveTextSize.Small,
-                                        Color = AdaptiveTextColor.Accent
-                                    });
-                                    Eventschedulestart.Add(new AdaptiveTextBlock()
-                                    {
-                                        Text = vartime1,
-                                        Size = AdaptiveTextSize.Small,
-                                        Color = AdaptiveTextColor.Accent
-                                    });
-                                    Eventscheduleend.Add(new AdaptiveTextBlock()
-                                    {
-                                        Text = vartime2,
-                                        Size = AdaptiveTextSize.Small,
-                                        Color = AdaptiveTextColor.Accent
-                                    });
-                                    Eventschedulesubject.Add(new AdaptiveTextBlock()
-                                    {
-                                        Text = calendarView[i].Subject,
-                                        Size = AdaptiveTextSize.Small,
-                                        Color = AdaptiveTextColor.Accent
-                                    });
-                                }
-                            }
-
-                            if (boolvarcheck == "true")
-                            {
-                                card.Body.Add(new AdaptiveContainer()
-                                {
-
-
-                                    Items = new List<AdaptiveElement>()
-                    {
+                                Items = new List<AdaptiveElement>()
+                                                {
 
 
 
 
-                          new AdaptiveColumnSet()
-                            {
-                                Type = "ColumnSet",
-                                Height = AdaptiveHeight.Auto,
-                                Columns=new List<AdaptiveColumn> ()
-                                {
-                                  new AdaptiveColumn()
-                                  {
-                                      Type="Column",
-                                      Width="200px",
+                                                      new AdaptiveColumnSet()
+                                                        {
+                                                            Type = "ColumnSet",
+                                                            Height = AdaptiveHeight.Auto,
+                                                            Columns=new List<AdaptiveColumn> ()
+                                                            {
+                                                              new AdaptiveColumn()
+                                                              {
+                                                                  Type="Column",
+                                                                  Width="500px",
 
-                                      Items=new List<AdaptiveElement>()
-                                      {
+                                                                  Items=new List<AdaptiveElement>()
+                                                                  {
 
-                                          new AdaptiveTextBlock()
-                                          {
-                                              Type="TextBlock",
-                                              Text=luiscalenderentity+" Conference Hall",
-                                               Weight=AdaptiveTextWeight.Bolder,
-                                               Color=AdaptiveTextColor.Good
-                                          }
-                                      }
-                                  }  ,
-                                  new AdaptiveColumn()
-                                  {
-                                      Type="Column",
-                                      Width="150px",
-                                      Items=new List<AdaptiveElement>()
-                                      {
-                                          new AdaptiveTextBlock()
-                                          {
-                                              Type="TextBlock",
-                                              Text=DateTime.Today.ToString("dd-MM-yyyy"),
-                                               Weight=AdaptiveTextWeight.Bolder,
-                                               Color = AdaptiveTextColor.Good
-
-                                          }
-                                      }
-                                  },
-
-                                 }
-                          },
-
-                          new AdaptiveColumnSet()
-                            {
-                                Type = "ColumnSet",
-                                Height = AdaptiveHeight.Auto,
-                                Columns=new List<AdaptiveColumn> ()
-                                {
-                                  new AdaptiveColumn()
-                                  {
-                                      Type="Column",
-                                      Width="200px",
-
-                                      Items=new List<AdaptiveElement>()
-                                      {
-
-                                          new AdaptiveTextBlock()
-                                          {
-                                              Type="TextBlock",
-                                              Text="Name",
-                                               Weight=AdaptiveTextWeight.Bolder,
-                                               Color=AdaptiveTextColor.Good
-                                          }
-                                      }
-                                  }  ,
-                                  new AdaptiveColumn()
-                                  {
-                                      Type="Column",
-                                      Width="80px",
-                                      Items=new List<AdaptiveElement>()
-                                      {
-                                          new AdaptiveTextBlock()
-                                          {
-                                              Type="TextBlock",
-                                              Text="Start Time",
-                                               Weight=AdaptiveTextWeight.Bolder,
-                                               Color = AdaptiveTextColor.Good
-
-                                          }
-                                      }
-                                  },
-                                  new AdaptiveColumn()
-                                  {
-                                      Type="Column",
-                                      Width="80px",
-                                      Items=new List<AdaptiveElement>()
-                                      {
-                                          new AdaptiveTextBlock()
-                                          {
-                                              Type="TextBlock",
-                                              Text="End Time",
-                                               Weight=AdaptiveTextWeight.Bolder,
-                                               Color = AdaptiveTextColor.Good
-
-                                          }
-                                      }
-                                  },
-
-                                 }
-                          },
+                                                                      new AdaptiveTextBlock()
+                                                                      {
+                                                                          Type="TextBlock",
+                                                                          Text=" No scheduling for "+luiscalenderentity+" hall",
+                                                                           Weight=AdaptiveTextWeight.Bolder,
+                                                                           Color=AdaptiveTextColor.Good
+                                                                      }
+                                                                  }
+                                                              }
 
 
-
-
-                        new AdaptiveColumnSet()
-                        {
-                            Type = "ColumnSet",
-                            Height = AdaptiveHeight.Auto,
-
-                            Columns=new List<AdaptiveColumn> ()
-                            {
-
-
-                              new AdaptiveColumn()
-                              {
-                                  Type="Column",
-                                  Width="200px",
-                                  Items=Eventschedulesubject,
-
-
-                              },
-
-                               new AdaptiveColumn()
-                                  {
-                                      Type="Column",
-                                      Width="80px",
-                                     Items= Eventschedulestart,
-                                  },
-
-                                 new AdaptiveColumn()
-                              {
-                                  Type="Column",
-                                  Width="80px",
-                                 Items= Eventscheduleend,
-                              }
-
-
-
-                            }
-
-
-                        },
-                    }
-                                });
-                            }
-
-                            else
-                            {
-                                card.Body.Add(new AdaptiveContainer()
-                                {
-
-
-                                    Items = new List<AdaptiveElement>()
-                    {
-
-
-
-
-                          new AdaptiveColumnSet()
-                            {
-                                Type = "ColumnSet",
-                                Height = AdaptiveHeight.Auto,
-                                Columns=new List<AdaptiveColumn> ()
-                                {
-                                  new AdaptiveColumn()
-                                  {
-                                      Type="Column",
-                                      Width="500px",
-
-                                      Items=new List<AdaptiveElement>()
-                                      {
-
-                                          new AdaptiveTextBlock()
-                                          {
-                                              Type="TextBlock",
-                                              Text=" No scheduling for "+luiscalenderentity+" hall",
-                                               Weight=AdaptiveTextWeight.Bolder,
-                                               Color=AdaptiveTextColor.Good
-                                          }
-                                      }
-                                  }
-
-
-                                 }
-                          },
+                                                             }
+                                                      },
 
 
 
@@ -1856,18 +1679,413 @@ namespace Demo12_DevBotAuth4EchoBot.Bots
 
 
 
-                    }
-                                });
-                            }
-
-                            var attachment1 = new Microsoft.Bot.Schema.Attachment
-                            {
-                                ContentType = AdaptiveCard.ContentType,
-                                Content = card,
-                            };
-                            var reply1 = MessageFactory.Attachment(attachment1);
-                            await turnContext.SendActivityAsync(reply1, cancellationToken);
+                                                }
+                            });
                         }
+
+                        var attachment1 = new Microsoft.Bot.Schema.Attachment
+                        {
+                            ContentType = AdaptiveCard.ContentType,
+                            Content = card,
+                        };
+                        var reply1 = MessageFactory.Attachment(attachment1);
+                        await turnContext.SendActivityAsync(reply1, cancellationToken);
+
+                        //                            }
+
+                        //                            else
+                        //                            {
+                        //                                card.Body.Add(new AdaptiveContainer()
+                        //                                {
+
+
+                        //                                    Items = new List<AdaptiveElement>()
+                        //                    {
+
+
+
+
+                        //                          new AdaptiveColumnSet()
+                        //                            {
+                        //                                Type = "ColumnSet",
+                        //                                Height = AdaptiveHeight.Auto,
+                        //                                Columns=new List<AdaptiveColumn> ()
+                        //                                {
+                        //                                  new AdaptiveColumn()
+                        //                                  {
+                        //                                      Type="Column",
+                        //                                      Width="500px",
+
+                        //                                      Items=new List<AdaptiveElement>()
+                        //                                      {
+
+                        //                                          new AdaptiveTextBlock()
+                        //                                          {
+                        //                                              Type="TextBlock",
+                        //                                              Text=" No scheduling for "+luiscalenderentity+" hall",
+                        //                                               Weight=AdaptiveTextWeight.Bolder,
+                        //                                               Color=AdaptiveTextColor.Good
+                        //                                          }
+                        //                                      }
+                        //                                  }
+
+
+                        //                                 }
+                        //                          },
+
+
+
+
+
+
+
+
+                        //                    }
+                        //                                });
+                        //                            }
+
+                        //                            var attachment1 = new Microsoft.Bot.Schema.Attachment
+                        //                            {
+                        //                                ContentType = AdaptiveCard.ContentType,
+                        //                                Content = card,
+                        //                            };
+                        //                            var reply1 = MessageFactory.Attachment(attachment1);
+                        //                            await turnContext.SendActivityAsync(reply1, cancellationToken);
+                        //                        }
+
+                        //                        else
+                        //                        {
+                        //                            String luiscalenderentity = "";
+
+
+                        //                            var queryOptions = new List<QueryOption>()
+                        //            {
+                        //                new QueryOption("startDateTime", "2020-02-20T00:00:01-08:00"),
+                        //                new QueryOption("endDateTime", "2020-02-20T23:59:59-08:00")
+                        //            };
+
+                        //                            var calendarView = await graphClient.Me.Calendar.CalendarView
+                        //                                .Request(queryOptions)
+                        //                                .GetAsync();
+
+
+
+
+                        //                            DateTime t = DateTime.Today;
+                        //                            string newDateTime = "";
+                        //                            DateTime dt;
+                        //                            if (DateTime.TryParse(t.ToString(), out dt))
+                        //                            {
+
+                        //                                newDateTime = dt.ToString("yyyy-MM-dd");
+                        //                            }
+
+                        //                            String starttimeluis = newDateTime;
+
+                        //                            for (int i = 0; i < UAT_LUIS.entities.Length; i++)
+                        //                            {
+                        //                                entityList.Add(UAT_LUIS.entities[i].type.ToString().ToLower());
+                        //                                if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("tulip"))
+                        //                                {
+                        //                                    luiscalenderentity = "tulip";
+
+                        //                                }
+
+                        //                                else if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("lotus"))
+                        //                                {
+                        //                                    luiscalenderentity = "lotus";
+
+                        //                                }
+
+                        //                                else if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("snowdrop"))
+                        //                                {
+                        //                                    luiscalenderentity = "snowdrop";
+
+                        //                                }
+                        //                                else if (UAT_LUIS.entities[i].entity.ToString().ToLower().Contains("chanyaky"))
+                        //                                {
+                        //                                    luiscalenderentity = "chanyaky";
+
+                        //                                }
+                        //                            }
+
+
+                        //                            string boolvarcheck = "";
+                        //                            for (int i = 0; i < calendarView.Count; i++)
+                        //                            {
+
+
+                        //                                if (calendarView[i].Location.DisplayName.ToLower().Contains(luiscalenderentity))
+                        //                                {
+                        //                                    boolvarcheck = "true";
+
+                        //                                    string converttostring1 = "";
+                        //                                    DateTime date1;
+                        //                                    if (DateTime.TryParse(calendarView[i].Start.DateTime.ToString(), out date1))
+                        //                                    {
+
+                        //                                        converttostring1 = date1.ToString("HH:mm:ss");
+                        //                                    }
+
+                        //                                    String vartime1 = converttostring1;
+
+
+                        //                                    string converttostring2 = "";
+                        //                                    DateTime date2;
+                        //                                    if (DateTime.TryParse(calendarView[i].End.DateTime.ToString(), out date2))
+                        //                                    {
+
+                        //                                        converttostring2 = date2.ToString("HH:mm:ss");
+                        //                                    }
+
+                        //                                    String vartime2 = converttostring2;
+
+
+                        //                                    EventNameschedule.Add(new AdaptiveTextBlock()
+                        //                                    {
+                        //                                        Text = calendarView[i].Location.DisplayName,
+                        //                                        Size = AdaptiveTextSize.Small,
+                        //                                        Color = AdaptiveTextColor.Accent
+                        //                                    });
+                        //                                    Eventschedulestart.Add(new AdaptiveTextBlock()
+                        //                                    {
+                        //                                        Text = vartime1,
+                        //                                        Size = AdaptiveTextSize.Small,
+                        //                                        Color = AdaptiveTextColor.Accent
+                        //                                    });
+                        //                                    Eventscheduleend.Add(new AdaptiveTextBlock()
+                        //                                    {
+                        //                                        Text = vartime2,
+                        //                                        Size = AdaptiveTextSize.Small,
+                        //                                        Color = AdaptiveTextColor.Accent
+                        //                                    });
+                        //                                    Eventschedulesubject.Add(new AdaptiveTextBlock()
+                        //                                    {
+                        //                                        Text = calendarView[i].Subject,
+                        //                                        Size = AdaptiveTextSize.Small,
+                        //                                        Color = AdaptiveTextColor.Accent
+                        //                                    });
+                        //                                }
+                        //                            }
+
+                        //                            if (boolvarcheck == "true")
+                        //                            {
+                        //                                card.Body.Add(new AdaptiveContainer()
+                        //                                {
+
+
+                        //                                    Items = new List<AdaptiveElement>()
+                        //                    {
+
+
+
+
+                        //                          new AdaptiveColumnSet()
+                        //                            {
+                        //                                Type = "ColumnSet",
+                        //                                Height = AdaptiveHeight.Auto,
+                        //                                Columns=new List<AdaptiveColumn> ()
+                        //                                {
+                        //                                  new AdaptiveColumn()
+                        //                                  {
+                        //                                      Type="Column",
+                        //                                      Width="200px",
+
+                        //                                      Items=new List<AdaptiveElement>()
+                        //                                      {
+
+                        //                                          new AdaptiveTextBlock()
+                        //                                          {
+                        //                                              Type="TextBlock",
+                        //                                              Text=luiscalenderentity+" Conference Hall",
+                        //                                               Weight=AdaptiveTextWeight.Bolder,
+                        //                                               Color=AdaptiveTextColor.Good
+                        //                                          }
+                        //                                      }
+                        //                                  }  ,
+                        //                                  new AdaptiveColumn()
+                        //                                  {
+                        //                                      Type="Column",
+                        //                                      Width="150px",
+                        //                                      Items=new List<AdaptiveElement>()
+                        //                                      {
+                        //                                          new AdaptiveTextBlock()
+                        //                                          {
+                        //                                              Type="TextBlock",
+                        //                                              Text=DateTime.Today.ToString("dd-MM-yyyy"),
+                        //                                               Weight=AdaptiveTextWeight.Bolder,
+                        //                                               Color = AdaptiveTextColor.Good
+
+                        //                                          }
+                        //                                      }
+                        //                                  },
+
+                        //                                 }
+                        //                          },
+
+                        //                          new AdaptiveColumnSet()
+                        //                            {
+                        //                                Type = "ColumnSet",
+                        //                                Height = AdaptiveHeight.Auto,
+                        //                                Columns=new List<AdaptiveColumn> ()
+                        //                                {
+                        //                                  new AdaptiveColumn()
+                        //                                  {
+                        //                                      Type="Column",
+                        //                                      Width="200px",
+
+                        //                                      Items=new List<AdaptiveElement>()
+                        //                                      {
+
+                        //                                          new AdaptiveTextBlock()
+                        //                                          {
+                        //                                              Type="TextBlock",
+                        //                                              Text="Name",
+                        //                                               Weight=AdaptiveTextWeight.Bolder,
+                        //                                               Color=AdaptiveTextColor.Good
+                        //                                          }
+                        //                                      }
+                        //                                  }  ,
+                        //                                  new AdaptiveColumn()
+                        //                                  {
+                        //                                      Type="Column",
+                        //                                      Width="80px",
+                        //                                      Items=new List<AdaptiveElement>()
+                        //                                      {
+                        //                                          new AdaptiveTextBlock()
+                        //                                          {
+                        //                                              Type="TextBlock",
+                        //                                              Text="Start Time",
+                        //                                               Weight=AdaptiveTextWeight.Bolder,
+                        //                                               Color = AdaptiveTextColor.Good
+
+                        //                                          }
+                        //                                      }
+                        //                                  },
+                        //                                  new AdaptiveColumn()
+                        //                                  {
+                        //                                      Type="Column",
+                        //                                      Width="80px",
+                        //                                      Items=new List<AdaptiveElement>()
+                        //                                      {
+                        //                                          new AdaptiveTextBlock()
+                        //                                          {
+                        //                                              Type="TextBlock",
+                        //                                              Text="End Time",
+                        //                                               Weight=AdaptiveTextWeight.Bolder,
+                        //                                               Color = AdaptiveTextColor.Good
+
+                        //                                          }
+                        //                                      }
+                        //                                  },
+
+                        //                                 }
+                        //                          },
+
+
+
+
+                        //                        new AdaptiveColumnSet()
+                        //                        {
+                        //                            Type = "ColumnSet",
+                        //                            Height = AdaptiveHeight.Auto,
+
+                        //                            Columns=new List<AdaptiveColumn> ()
+                        //                            {
+
+
+                        //                              new AdaptiveColumn()
+                        //                              {
+                        //                                  Type="Column",
+                        //                                  Width="200px",
+                        //                                  Items=Eventschedulesubject,
+
+
+                        //                              },
+
+                        //                               new AdaptiveColumn()
+                        //                                  {
+                        //                                      Type="Column",
+                        //                                      Width="80px",
+                        //                                     Items= Eventschedulestart,
+                        //                                  },
+
+                        //                                 new AdaptiveColumn()
+                        //                              {
+                        //                                  Type="Column",
+                        //                                  Width="80px",
+                        //                                 Items= Eventscheduleend,
+                        //                              }
+
+
+
+                        //                            }
+
+
+                        //                        },
+                        //                    }
+                        //                                });
+                        //                            }
+
+                        //                            else
+                        //                            {
+                        //                                card.Body.Add(new AdaptiveContainer()
+                        //                                {
+
+
+                        //                                    Items = new List<AdaptiveElement>()
+                        //                    {
+
+
+
+
+                        //                          new AdaptiveColumnSet()
+                        //                            {
+                        //                                Type = "ColumnSet",
+                        //                                Height = AdaptiveHeight.Auto,
+                        //                                Columns=new List<AdaptiveColumn> ()
+                        //                                {
+                        //                                  new AdaptiveColumn()
+                        //                                  {
+                        //                                      Type="Column",
+                        //                                      Width="500px",
+
+                        //                                      Items=new List<AdaptiveElement>()
+                        //                                      {
+
+                        //                                          new AdaptiveTextBlock()
+                        //                                          {
+                        //                                              Type="TextBlock",
+                        //                                              Text=" No scheduling for "+luiscalenderentity+" hall",
+                        //                                               Weight=AdaptiveTextWeight.Bolder,
+                        //                                               Color=AdaptiveTextColor.Good
+                        //                                          }
+                        //                                      }
+                        //                                  }
+
+
+                        //                                 }
+                        //                          },
+
+
+
+
+
+
+
+
+                        //                    }
+                        //                                });
+                        //                            }
+
+                        //                            var attachment1 = new Microsoft.Bot.Schema.Attachment
+                        //                            {
+                        //                                ContentType = AdaptiveCard.ContentType,
+                        //                                Content = card,
+                        //                            };
+                        //                            var reply1 = MessageFactory.Attachment(attachment1);
+                        //                            await turnContext.SendActivityAsync(reply1, cancellationToken);
+                        //                        }
 
                     }
 
