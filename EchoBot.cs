@@ -42,9 +42,11 @@ namespace Demo12_DevBotAuth4EchoBot.Bots
         static int countOfLeave = 0;
         static string starttimecalender, endtimecalender;
         string botanswer, dateluis, botanswer1;
-        String new1, new2, new3, new4;
+        String new1, new2, new3, new4, newDateTime1;
         String roomluisname = "";
-        DateTime dateresultoverlap;
+        DateTime dateresultoverlap, datevar;
+
+        String ResultFromTime, ResultToTime, ResultFromtimeHour, ResultFromTimemMin, ResultToTimeHour, ResultToTimeMin;
         private IEnumerable<string> scopes = new string[] { "User.Read.All", "Calendars.ReadWrite" };
 
         // static string userInput = "";
@@ -151,33 +153,6 @@ namespace Demo12_DevBotAuth4EchoBot.Bots
 
 
 
-            //            var queryOptions1 = new List<QueryOption>()
-            //{
-            //    //new QueryOption("startDateTime",  starttimeluis ),
-            //    //new QueryOption("endDateTime", sw)
-
-            //                         new QueryOption("startDateTime", "2020-02-18T19:00:00"),
-            //    new QueryOption("endDateTime", "2020-02-19T19:00:00")
-            //};
-
-            //            var calendarView1 = await graphClient.Me.Calendar.CalendarView
-            //                .Request(queryOptions1)
-            //                .GetAsync();
-
-
-
-            //            var queryOptions = new List<QueryOption>()
-            //{
-            //    new QueryOption("startDateTime", "2020-01-01T19:00:00-08:00"),
-            //    new QueryOption("endDateTime", "2020-03-03T19:00:00-08:00")
-            //};
-
-            //var calendarView = await graphClient.Me.Calendar.CalendarView
-            //    .Request(queryOptions)
-            //    .GetAsync();
-
-
-            //****************
 
 
 
@@ -227,133 +202,7 @@ namespace Demo12_DevBotAuth4EchoBot.Bots
 
             ////***********
 
-            //for (int i = 0; i < eventss.Count; i++)
-            //{
-            //    // String a = 
-            //    EventLocation.Add(new AdaptiveTextBlock()
-            //    {
-            //        Text = eventss[1].Location.DisplayName,
-            //    Size = AdaptiveTextSize.Small,
-            //        Color = AdaptiveTextColor.Accent
-            //    });
-            //}
-
-            //for (int i = 0; i < eventss.Count; i++)
-            //{
-            //    // String a = 
-            //    Eventsname1.Add(new AdaptiveTextBlock()
-            //    {
-            //        Text = eventss[1].Subject,
-            //        Size = AdaptiveTextSize.Small,
-            //        Color = AdaptiveTextColor.Accent
-            //    });
-            //}
-            //for (int i = 0; i < eventss.Count; i++)
-            //{
-            //    // String a = 
-            //    EventDate.Add(new AdaptiveTextBlock()
-            //    {
-            //        Text = eventss[1].Subject,
-            //        Size = AdaptiveTextSize.Small,
-            //        Color = AdaptiveTextColor.Accent
-            //    });
-            //}
-
-
-
-            //card.Body.Add(new AdaptiveContainer()
-            //{
-
-
-            //    Items = new List<AdaptiveElement>()
-            //            {
-
-
-
-
-            //          new AdaptiveColumnSet()
-            //            {
-            //                Type = "ColumnSet",
-            //                Height = AdaptiveHeight.Auto,
-            //                Columns=new List<AdaptiveColumn> ()
-            //                {
-            //                  new AdaptiveColumn()
-            //                  {
-            //                      Type="Column",
-            //                      Width="200px",
-
-            //                      Items=new List<AdaptiveElement>()
-            //                      {
-
-            //                          new AdaptiveTextBlock()
-            //                          {
-            //                              Type="TextBlock",
-            //                              Text="Conference Rooms",
-            //                               Weight=AdaptiveTextWeight.Bolder,
-            //                               Color=AdaptiveTextColor.Good
-            //                          },
-            //                          new AdaptiveTextBlock()
-            //                          {
-            //                              Type="TextBlock",
-            //                              Text="Conference Rooms",
-            //                               Weight=AdaptiveTextWeight.Bolder,
-            //                               Color=AdaptiveTextColor.Good
-            //                          }
-            //                      }
-            //                  }
-
-
-
-            //                }
-            //          },
-
-            //        new AdaptiveColumnSet()
-            //        {
-            //            Type = "ColumnSet",
-            //            Height = AdaptiveHeight.Auto,
-
-            //            Columns=new List<AdaptiveColumn> ()
-            //            {
-
-            //                  new AdaptiveColumn()
-            //              {
-            //                  Type="Column",
-            //                  Width="300px",
-            //                 Items= EventDate,
-            //              }
-            //                  ,     new AdaptiveColumn()
-            //              {
-            //                  Type="Column",
-            //                  Width="300px",
-            //                 Items= Eventsname1,
-            //              },new AdaptiveColumn()
-            //              {
-            //                  Type="Column",
-            //                  Width="300px",
-            //                 Items= EventLocation,
-            //              }
-
-
-
-
-            //            }
-
-
-            //        }
-            //    }
-
-
-
-            //});
-
-            //var attachment11 = new Microsoft.Bot.Schema.Attachment
-            //{
-            //    ContentType = AdaptiveCard.ContentType,
-            //    Content = card,
-            //};
-            //var reply11 = MessageFactory.Attachment(attachment11);
-            //await turnContext.SendActivityAsync(reply11, cancellationToken);
-
+           
 
 
 
@@ -1366,16 +1215,7 @@ namespace Demo12_DevBotAuth4EchoBot.Bots
                             String luiscalenderentity = "";
 
 
-                            //                var queryOptions = new List<QueryOption>()
-                            //{
-                            //    new QueryOption("startDateTime", "2020-02-20T00:00:01-08:00"),
-                            //    new QueryOption("endDateTime", "2020-02-20T23:59:59-08:00")
-                            //};
-
-                            //                var calendarView = await graphClient.Me.Calendar.CalendarView
-                            //                    .Request(queryOptions)
-                            //                    .GetAsync();
-
+                        
 
 
 
@@ -2038,12 +1878,17 @@ namespace Demo12_DevBotAuth4EchoBot.Bots
                     //*******
 
 
-                    if (reasonintent == "ConferenceRoom")
+                    if (reasonintent == "Available")
 
                     {
+                       
+
+                        
+
                         UAT_LUIS_Entity UAT_LUIS = await GetEntityFromLUIS(turnContext.Activity.Text);
                         List<string> entityList = new List<string>();
-                        String HourFromTime = "", HourToTime = "", MinToTime = "", MinFromTime = "";
+                        String HourFromTime = "", HourToTime = "", MinToTime = "", MinFromTime = "",checkspecificdate="";
+                        String FromTime="", ToTime="", FromTimeHour="", FromTimeMin="", ToTimeHour="", ToTimeMin="";
                         for (int i = 0; i < UAT_LUIS.entities.Length; i++)
                         {
                             entityList.Add(UAT_LUIS.entities[i].type.ToString().ToLower());
@@ -2055,627 +1900,421 @@ namespace Demo12_DevBotAuth4EchoBot.Bots
                             if (UAT_LUIS.entities[i].type.ToString().ToLower() == "date")
                             {
                                 dateluis = UAT_LUIS.entities[i].entity.ToString().ToLower();
+                                checkspecificdate = "true"
+;                            }
+
+                            if (UAT_LUIS.entities[i].type.ToString().ToLower() == "today")
+                            {
+                                dateluis = UAT_LUIS.entities[i].entity.ToString().ToLower();
                             }
+
+                            if (UAT_LUIS.entities[i].type.ToString().ToLower() == "the day after tomorrow")
+                            {
+                                dateluis = UAT_LUIS.entities[i].entity.ToString().ToLower();
+                            }
+                            if (UAT_LUIS.entities[i].type.ToString().ToLower() == "tomorrow")
+                            {
+                                dateluis = UAT_LUIS.entities[i].entity.ToString().ToLower();
+                            }
+
+
+
 
                         }
 
-                        var indexVal = Enumerable.Range(0, entityList.Count)
-                             .Where(i => entityList[i] == "fromtime")
-                             .ToList();
+                        //*****
 
-                        var indexVal1 = Enumerable.Range(0, entityList.Count)
-                            .Where(i => entityList[i] == "totime")
-                            .ToList();
+                        
+                        //************code begin here******************
 
+                        String d = dateluis;
+
+
+                        if (checkspecificdate == "true")
+                        {
+                            datevar = Convert.ToDateTime(dateluis);
+                        }
+                        else if (dateluis == "today")
+                        {
+                            datevar = DateTime.Today;
+                        }
+                        else if (dateluis == "tomorrow")
+                        {
+                            datevar = DateTime.Today.AddDays(1);
+                        }
+                        else if (dateluis == "the day after tomorrow")
+                        {
+                            datevar = DateTime.Today.AddDays(2);
+                        }
+                        else
+                        {
+                            datevar = DateTime.Today;
+                        }
+
+                        ///**********convertion
+                        DateTime dateobject;
+                        String datestring = "";
+                        if (DateTime.TryParse(datevar.ToString(), out dateobject))
+                        {
+
+                            datestring = dateobject.ToString("yyyy-MM-ddT");
+
+                        }
+
+
+                        //**********************
+
+
+                        String teju1="", teju2="", temp="";
 
                         if (entityList.Contains("fromtime") == true)
                         {
 
-
-                            for (int i = 0; i < indexVal.Count; i++)
+                            var indexVal = Enumerable.Range(0, entityList.Count)
+                                         .Where(i => entityList[i] == "fromtime")
+                                         .ToList();
+                            if (indexVal.Count == 1)
                             {
-                                if (UAT_LUIS.entities[indexVal[i]].role.ToString().Equals("HourTime"))
+                                teju1 = UAT_LUIS.entities[indexVal[0]].entity.ToString();
+
+
+                                if(teju1.Contains("pm"))
                                 {
-                                    HourFromTime = UAT_LUIS.entities[indexVal[i]].entity.ToString();
-                                    int h = int.Parse(HourFromTime) + 8;
-                                    HourFromTime = h.ToString();
-                                    new1 = UAT_LUIS.entities[indexVal[i]].entity.ToString();
+
+                                    
+                                        int index2 = teju1.IndexOf("pm");
+                                        if (index2 != -1)
+                                        {
+                                            ResultFromTime = teju1.Remove(index2);
+
+
+                                        }
+                                    temp = ResultFromTime;
+
                                 }
 
-                                //UAT_LUIS.entities[i].role.ToString().Equals("MinTime")
-                                else if (UAT_LUIS.entities[indexVal[i]].role.ToString().Equals("MinTime"))
+                               
+
+                                
+                                else
                                 {
-                                    MinFromTime = UAT_LUIS.entities[indexVal[i]].entity.ToString();
-                                    new2 = UAT_LUIS.entities[indexVal[i]].entity.ToString();
+                                int index2 = teju1.IndexOf("am");
+                                if (index2 != -1)
+                                {
+                                    ResultFromTime = teju1.Remove(index2);
+
+
                                 }
+                                temp = ResultFromTime;
+
                             }
 
-                        }
-                        if (entityList.Contains("totime") == true)
-                        {
+                           
 
 
-                            for (int i = 0; i < indexVal1.Count; i++)
-                            {
-                                if (UAT_LUIS.entities[indexVal1[i]].role.ToString().Equals("HourTime1"))
+                        
+
+
+
+
+
+
+                                if(teju1.Contains("am"))
                                 {
-                                    HourToTime = UAT_LUIS.entities[indexVal1[i]].entity.ToString();
-                                    int h = int.Parse(HourToTime) + 8;
-                                    HourToTime = h.ToString();
-                                    new3 = UAT_LUIS.entities[indexVal1[i]].entity.ToString();
-                                }
-                                //UAT_LUIS.entities[i].role.ToString().Equals("MinTime1")
-                                else if (UAT_LUIS.entities[indexVal1[i]].role.ToString().Equals("MinTime1"))
-                                {
-                                    MinToTime = UAT_LUIS.entities[indexVal1[i]].entity.ToString();
-                                    new4 = UAT_LUIS.entities[indexVal1[i]].entity.ToString(); ;
-                                }
-                            }
-
-                        }
-
-                        switch (new1)
-                        {
-                            case "1":
-                                new1 = "01";
-                                break;
-
-                            case "2":
-                                new1 = "02";
-                                break;
-
-
-
-                            case "3":
-                                new1 = "03";
-                                break;
-                            case "4":
-                                new1 = "04";
-                                break;
-                            case "5":
-                                new1 = "05";
-                                break;
-                            case "6":
-                                new1 = "06";
-                                break;
-                            case "7":
-                                new1 = "07";
-                                break;
-                            case "8":
-                                new1 = "08";
-                                break;
-                            case "9":
-                                new1 = "09";
-                                break;
-
-                        }
-
-                        switch (new2)
-                        {
-                            case "1":
-                                new2 = "10";
-                                break;
-
-                            case "2":
-                                new2 = "20";
-                                break;
-
-
-
-                            case "3":
-                                new2 = "30";
-                                break;
-                            case "4":
-                                new2 = "40";
-                                break;
-                            case "5":
-                                new2 = "50";
-                                break;
-                            case "6":
-                                new2 = "60";
-                                break;
-                            case "7":
-                                new2 = "70";
-                                break;
-                            case "8":
-                                new2 = "80";
-                                break;
-                            case "9":
-                                new2 = "90";
-                                break;
-
-                        }
-
-                        switch (new3)
-                        {
-                            case "1":
-                                new3 = "01";
-                                break;
-
-                            case "2":
-                                new3 = "02";
-                                break;
-
-
-
-                            case "3":
-                                new3 = "03";
-                                break;
-                            case "4":
-                                new3 = "04";
-                                break;
-                            case "5":
-                                new3 = "05";
-                                break;
-                            case "6":
-                                new3 = "06";
-                                break;
-                            case "7":
-                                new3 = "07";
-                                break;
-                            case "8":
-                                new3 = "08";
-                                break;
-                            case "9":
-                                new3 = "09";
-                                break;
-
-                        }
-                        switch (new4)
-                        {
-                            case "1":
-                                new4 = "10";
-                                break;
-
-                            case "2":
-                                new4 = "20";
-                                break;
-
-
-
-                            case "3":
-                                new4 = "30";
-                                break;
-                            case "4":
-                                new4 = "40";
-                                break;
-                            case "5":
-                                new4 = "50";
-                                break;
-                            case "6":
-                                new4 = "60";
-                                break;
-                            case "7":
-                                new4 = "70";
-                                break;
-                            case "8":
-                                new4 = "80";
-                                break;
-                            case "9":
-                                new4 = "90";
-                                break;
-
-                        }
-
-                        DateTime t = DateTime.Today;
-                        DateTime t1 = t.AddHours(int.Parse(HourFromTime));
-                        DateTime t23 = t1.AddMinutes(int.Parse(MinFromTime));
-                        String s = Convert.ToString(t23);
-                        string newDateTime = "";
-
-
-                        DateTime dt;
-                        if (DateTime.TryParse(t23.ToString(), out dt))
-                        {
-                            // newDateTime = dt.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK");
-                            newDateTime = dt.ToString("yyyy-MM-ddTHH:mm:ss");
-                        }
-
-                        String starttimeluis = newDateTime;
-
-
-                        DateTime t1111 = DateTime.Today;
-                        DateTime t111 = t1111.AddHours(int.Parse(HourToTime));
-                        DateTime t231 = t111.AddMinutes(int.Parse(MinToTime));
-                        String sw = Convert.ToString(t231);
-                        string newDateTime1 = "";
-
-
-                        DateTime dt1;
-                        if (DateTime.TryParse(t231.ToString(), out dt1))
-                        {
-                            // newDateTime = dt1.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK");
-                            newDateTime1 = dt1.ToString("yyyy-MM-ddTHH:mm:ss");
-
-                        }
-
-                        String Endtimeluis = newDateTime1;
-
-                        //**************************New Date Query***************************
-
-
-
-
-
-
-                        if (dateluis != null)
-                        {
-                            DateTime starttimenew1 = Convert.ToDateTime(dateluis);
-                            DateTime dtobj23;
-                            String newDateTime111 = "";
-                            if (DateTime.TryParse(starttimenew1.ToString(), out dtobj23))
-                            {
-
-                                newDateTime111 = dtobj23.ToString("yyyy-MM-ddT");
-
-                            }
-
-                            String try1 = newDateTime111;
-
-
-
-                            string datevarparticularstart = try1 + new1 + ":" + new2 + ":" + "00-08:00";
-                            string datevarparticularend = try1 + new3 + ":" + new4 + ":" + "00-08:00";
-
-                            var queryparticulardate = new List<QueryOption>()
-{
-    new QueryOption("startDateTime", datevarparticularstart),
-    new QueryOption("endDateTime", datevarparticularend)
-};
-
-                            var calendarViewparticulardate = await graphClient.Me.CalendarView
-                                .Request(queryparticulardate)
-                                .GetAsync();
-
-
-                            string d = "";
-
-                            //*************
-
-                            if (calendarViewparticulardate.Count != 0)
-                            {
-                                dateresultoverlap = Convert.ToDateTime(calendarViewparticulardate[0].End.DateTime).AddHours(-8);
-                            }
-
-
-                            String s1 = Convert.ToString(dateresultoverlap);
-                            DateTime dtobj1;
-                            if (DateTime.TryParse(s1, out dtobj1))
-                            {
-
-                                newDateTime1 = dtobj1.ToString("yyyy-MM-ddTHH:mm");
-
-                            }
-
-                            String try11 = newDateTime1;
-
-                            string try22 = try1 + new1 + ":" + new2;
-
-                            //*********
-
-
-
-
-
-
-                            //**********
-
-                            if (calendarViewparticulardate.Count != 0)
-                            {
-
-                                // int a = calendarViewparticulardate.Count;
-
-
-                                if (try11 == try22)
-                                {
-                                    botanswer = roomluisname + " is  available";
+                                    teju2 = "00am";
                                 }
                                 else
                                 {
-
-                                    for (int i = 0; i < calendarViewparticulardate.Count; i++)
+                                    teju2 = "00pm";
+                                }
+                                
+                                teju1 = temp;
+                 
+                            }
+                            else
+                            {
+                                for (int i = 0; i < indexVal.Count; i++)
+                                {
+                                    if (UAT_LUIS.entities[indexVal[i]].role.ToString().Equals("HourTime"))
                                     {
-                                        String a = roomluisname.ToLower();
-                                        String b = calendarViewparticulardate[i].Location.DisplayName.ToLower();
-
-                                        if (roomluisname.ToLower().Contains("tulip") == true && calendarViewparticulardate[i].Location.DisplayName.ToLower().Contains("tulip") == true)
-                                        {
-                                            botanswer = roomluisname + " is not available";
-                                        }
-                                        else      if (calendarViewparticulardate[i].Location.DisplayName.ToLower().Contains("lotus") == true && roomluisname.ToLower().Contains("lotus") == true)
-                                        {
-                                            botanswer = roomluisname + " is not available";
-                                        }
-                                         else  if (calendarViewparticulardate[i].Location.DisplayName.ToLower().Contains("snowdrop") == true && roomluisname.ToLower().Contains("snowdrop") == true)
-                                        {
-                                            botanswer = roomluisname + " is not available";
-                                        }
-                                        else if (calendarViewparticulardate[i].Location.DisplayName.ToLower().Contains("chanyaky") == true && roomluisname.ToLower().Contains("chanyaky") == true)
-                                        {
-                                            botanswer = roomluisname + " is not available";
-                                        }
-                                        else
-                                        {
-                                            botanswer = roomluisname + " is  available";
-
-                                        }
-
-
-
-                                        //************************************************
-                                        //if (roomluisname.ToLower().Contains("tulip") == true && calendarViewparticulardate[i].Location.DisplayName.ToLower().Contains("tulip") == true)
-                                        //{
-                                        //    botanswer = roomluisname + " is not available";
-                                        //}
-                                        //else
-                                        //{
-                                        //    botanswer = roomluisname + " is  available";
-
-                                        //}
-
-
-                                        //if (calendarViewparticulardate[i].Location.DisplayName.ToLower().Contains("lotus") == true && roomluisname.ToLower().Contains("lotus") == true)
-                                        //{
-                                        //    botanswer = roomluisname + " is not available";
-                                        //}
-                                        //else
-                                        //{
-                                        //    botanswer = roomluisname + " is  available";
-                                        //}
-                                        //if (calendarViewparticulardate[i].Location.DisplayName.ToLower().Contains("snowdrop") == true && roomluisname.ToLower().Contains("snowdrop") == true)
-                                        //{
-                                        //    botanswer = roomluisname + " is not available";
-                                        //}
-                                        //else
-                                        //{
-                                        //    botanswer = roomluisname + " is  available";
-                                        //}
-
-                                        //if (calendarViewparticulardate[i].Location.DisplayName.ToLower().Contains("chanyaky") == true && roomluisname.ToLower().Contains("chanyaky") == true)
-                                        //{
-                                        //    botanswer = roomluisname + " is not available";
-                                        //}
-                                        //else
-                                        //{
-                                        //    botanswer = roomluisname + " is  available";
-
-                                        //}
-
-
-
+                                        teju1 = UAT_LUIS.entities[indexVal[i]].entity.ToString();
 
 
 
                                     }
+                                    else if (UAT_LUIS.entities[indexVal[i]].role.ToString().Equals("MinTime"))
+                                        teju2 = UAT_LUIS.entities[indexVal[i]].entity.ToString();
+
+                                         
 
                                 }
+                            }
+
+
+                        }
+
+
+
+
+
+                        if (teju2.Contains("pm"))
+                        {
+                            int index2 = teju2.IndexOf("pm");
+                            if (index2 != -1)
+                            {
+                                ResultFromTime = teju2.Remove(index2) ;
+                              
+                           
+                            }
+
+                                                                                 
+                        }
+                        if (teju2.Contains("am"))
+                        {
+                            int index2 = teju2.IndexOf("am");
+                            if (index2 != -1)
+                            {
+                                ResultFromTime = teju2.Remove(index2);
+
+
+                            }
+
+
+                        }
+
+                        String asd;
+                        if (teju2.Contains("pm"))
+                        {
+
+                            asd = teju1 + ":"+ResultFromTime+" PM";
+                        }
+                        else
+                        {
+                             asd = teju1 +":"+ ResultFromTime+" AM";
+                        }
+
+                      ;
+                        DateTime dateobject11;
+                        String datestring11 = "";
+                        if (DateTime.TryParse(asd.ToString(), out dateobject11))
+                        {
+
+                            datestring11 = dateobject11.ToString("HH:mm");
+
+                        }
+
+
+
+                        //**************
+
+
+                        String teju21 = "", teju22 = "";
+
+                        if (entityList.Contains("totime") == true)
+                        {
+
+                            var indexVal = Enumerable.Range(0, entityList.Count)
+                                         .Where(i => entityList[i] == "totime")
+                                         .ToList();
+                            if (indexVal.Count == 1)
+                            {
+                                teju21 = UAT_LUIS.entities[indexVal[0]].entity.ToString();
+
+
+                                if (teju21.Contains("pm"))
+                                {
+
+
+                                    int index2 = teju21.IndexOf("pm");
+                                    if (index2 != -1)
+                                    {
+                                        ResultFromTime = teju21.Remove(index2);
+
+
+                                    }
+                                    temp = ResultFromTime;
+
+                                }
+
+
+
+
+                                else
+                                {
+                                    int index2 = teju21.IndexOf("am");
+                                    if (index2 != -1)
+                                    {
+                                        ResultFromTime = teju21.Remove(index2);
+
+
+                                    }
+                                    temp = ResultFromTime;
+
+                                }
+
+
+
+
+
+
+
+                                String g = teju21;
+
+                                if (teju21.Contains("am"))
+                                {
+                                    teju22 = "00am";
+                                }
+
+                                else
+                                {
+                                    teju22 = "00pm";
+                                }
+                               
+                                teju21 = temp;
 
                             }
                             else
                             {
+                                for (int i = 0; i < indexVal.Count; i++)
+                                {
+                                    if (UAT_LUIS.entities[indexVal[i]].role.ToString().Equals("HourTime1"))
+                                    {
+                                        teju21 = UAT_LUIS.entities[indexVal[i]].entity.ToString();
 
 
-                                botanswer = roomluisname + " is   available";
 
+                                    }
+                                    else if (UAT_LUIS.entities[indexVal[i]].role.ToString().Equals("MinTime1"))
+                                        teju22 = UAT_LUIS.entities[indexVal[i]].entity.ToString();
+
+
+
+                                }
                             }
-
-
-
-
-
-                           // await turnContext.SendActivityAsync(CreateActivityWithTextAndSpeak($" " + botanswer), cancellationToken);
-
-                            //**********
-
-
-
-
 
 
                         }
-                        else
-                        {
 
-                            DateTime starttimenew = DateTime.Today;
-                            DateTime dtobj;
-                            if (DateTime.TryParse(starttimenew.ToString(), out dtobj))
+
+
+                        if (teju22.Contains("pm"))
+                        {
+                            int index2 = teju22.IndexOf("pm");
+                            if (index2 != -1)
                             {
-                                // newDateTime = dt1.ToString("yyyy-MM-ddTHH:mm:ss.fffffffK");
-                                newDateTime1 = dtobj.ToString("yyyy-MM-ddT");
+                                ResultFromTime = teju22.Remove(index2);
+
 
                             }
 
-                            String try1 = newDateTime1;
 
-                            //switch (new1)
-                            //{
-                            //    case "1":
-                            //        new1 = "01";
-                            //        break;
-
-                            //    case "2":
-                            //        new1 = "02";
-                            //        break;
+                        }
+                        if (teju22.Contains("am"))
+                        {
+                            int index2 = teju22.IndexOf("am");
+                            if (index2 != -1)
+                            {
+                                ResultFromTime = teju22.Remove(index2);
 
 
+                            }
 
-                            //    case "3":
-                            //        new1 = "03";
-                            //        break;
-                            //    case "4":
-                            //        new1 = "04";
-                            //        break;
-                            //    case "5":
-                            //        new1 = "05";
-                            //        break;
-                            //    case "6":
-                            //        new1 = "06";
-                            //        break;
-                            //    case "7":
-                            //        new1 = "07";
-                            //        break;
-                            //    case "8":
-                            //        new1 = "08";
-                            //        break;
-                            //    case "9":
-                            //        new1 = "09";
-                            //        break;
 
-                            //}
+                        }
 
-                            //switch (new2)
-                            //{
-                            //    case "1":
-                            //        new2 = "10";
-                            //        break;
+                        String asd1;
+                        if (teju22.Contains("pm"))
+                        {
 
-                            //    case "2":
-                            //        new2 = "20";
-                            //        break;
+                            asd1 = teju21 + ":" + ResultFromTime + " PM";
+                        }
+                        else
+                        {
+                            asd1 = teju21 + ":" + ResultFromTime + " AM";
+                        }
 
 
 
-                            //    case "3":
-                            //        new2 = "30";
-                            //        break;
-                            //    case "4":
-                            //        new2 = "40";
-                            //        break;
-                            //    case "5":
-                            //        new2 = "50";
-                            //        break;
-                            //    case "6":
-                            //        new2 = "60";
-                            //        break;
-                            //    case "7":
-                            //        new2 = "70";
-                            //        break;
-                            //    case "8":
-                            //        new2 = "80";
-                            //        break;
-                            //    case "9":
-                            //        new2 = "90";
-                            //        break;
-
-                            //}
-
-                            //switch (new3)
-                            //{
-                            //    case "1":
-                            //        new3 = "01";
-                            //        break;
-
-                            //    case "2":
-                            //        new3 = "02";
-                            //        break;
 
 
 
-                            //    case "3":
-                            //        new3 = "03";
-                            //        break;
-                            //    case "4":
-                            //        new3 = "04";
-                            //        break;
-                            //    case "5":
-                            //        new3 = "05";
-                            //        break;
-                            //    case "6":
-                            //        new3 = "06";
-                            //        break;
-                            //    case "7":
-                            //        new3 = "07";
-                            //        break;
-                            //    case "8":
-                            //        new3 = "08";
-                            //        break;
-                            //    case "9":
-                            //        new3 = "09";
-                            //        break;
+                        DateTime dateobject111;
+                        String datestring111 = "";
+                        if (DateTime.TryParse(asd1.ToString(), out dateobject111))
+                        {
 
-                            //}
-                            //switch (new4)
-                            //{
-                            //    case "1":
-                            //        new4 = "10";
-                            //        break;
+                            datestring111 = dateobject111.ToString("HH:mm");
 
-                            //    case "2":
-                            //        new4 = "20";
-                            //        break;
+                        }
+
+                        string datestart = datestring + datestring11 + ":" + "00-08:00";
+                        string dateend = datestring + datestring111 + ":" + "00-08:00";
 
 
 
-                            //    case "3":
-                            //        new4 = "30";
-                            //        break;
-                            //    case "4":
-                            //        new4 = "40";
-                            //        break;
-                            //    case "5":
-                            //        new4 = "50";
-                            //        break;
-                            //    case "6":
-                            //        new4 = "60";
-                            //        break;
-                            //    case "7":
-                            //        new4 = "70";
-                            //        break;
-                            //    case "8":
-                            //        new4 = "80";
-                            //        break;
-                            //    case "9":
-                            //        new4 = "90";
-                            //        break;
-
-                            //}
-
-                            string try2 = try1 + new1 + ":" + new2 + ":" + "00-08:00";
-                            string try3 = try1 + new3 + ":" + new4 + ":" + "00-08:00";
-
-                            var queryOptionstry = new List<QueryOption>()
+                        var querydate = new List<QueryOption>()
 {
-    new QueryOption("startDateTime", try2),
-    new QueryOption("endDateTime", try3)
+    new QueryOption("startDateTime", datestart),
+    new QueryOption("endDateTime", dateend)
 };
 
-                            var calendarViewtry = await graphClient.Me.CalendarView
-                                .Request(queryOptionstry)
-                                .GetAsync();
+                        var calendarViewdate = await graphClient.Me.CalendarView
+                            .Request(querydate)
+                            .GetAsync();
 
 
 
+                        if (calendarViewdate.Count != 0)
+                        {
+                            dateresultoverlap = Convert.ToDateTime(calendarViewdate[0].End.DateTime).AddHours(-8);
+                        }
 
 
-                            if (calendarViewtry.Count != 0)
+                        string s1 = Convert.ToString(dateresultoverlap);
+                        DateTime dtobj1;
+                        if (DateTime.TryParse(s1, out dtobj1))
+                        {
+
+                            newDateTime1 = dtobj1.ToString("yyyy-MM-ddTHH:mm");
+
+                        }
+
+                        string date1 = newDateTime1;
+
+                        string date2 = datestring + new1 + ":" + new2;
+
+
+
+                        if (calendarViewdate.Count != 0)
+                        {
+
+                         
+
+                            if (date1 == date2)
+                            {
+                                botanswer = roomluisname + " is  available";
+                            }
+                            else
                             {
 
-                                int a = calendarViewtry.Count;
-                                for (int i = 0; i < calendarViewtry.Count; i++)
+                                for (int i = 0; i < calendarViewdate.Count; i++)
                                 {
+                                    String a = roomluisname.ToLower();
+                                    String b = calendarViewdate[i].Location.DisplayName.ToLower();
 
-
-
-                                    if (roomluisname.ToLower().Contains("tulip") == true && calendarViewtry[i].Location.DisplayName.ToLower().Contains("tulip") == true)
+                                    if (roomluisname.ToLower().Contains("tulip") == true && calendarViewdate[i].Location.DisplayName.ToLower().Contains("tulip") == true)
                                     {
                                         botanswer = roomluisname + " is not available";
                                     }
-                                   
-
-
-                                   else if (calendarViewtry[i].Location.DisplayName.ToLower().Contains("lotus") == true && roomluisname.ToLower().Contains("lotus") == true)
-                                    {
-                                        botanswer = roomluisname + " is not available";
-                                        // await turnContext.SendActivityAsync(CreateActivityWithTextAndSpeak($" " + botanswer1), cancellationToken);
-                                    }
-
-                                  else  if (calendarViewtry[i].Location.DisplayName.ToLower().Contains("snowdrop") == true && roomluisname.ToLower().Contains("snowdrop") == true)
+                                    else if (calendarViewdate[i].Location.DisplayName.ToLower().Contains("lotus") == true && roomluisname.ToLower().Contains("lotus") == true)
                                     {
                                         botanswer = roomluisname + " is not available";
                                     }
-                                    
-
-                                  else  if (calendarViewtry[i].Location.DisplayName.ToLower().Contains("chanyaky") == true && roomluisname.ToLower().Contains("chanyaky") == true)
+                                    else if (calendarViewdate[i].Location.DisplayName.ToLower().Contains("snowdrop") == true && roomluisname.ToLower().Contains("snowdrop") == true)
+                                    {
+                                        botanswer = roomluisname + " is not available";
+                                    }
+                                    else if (calendarViewdate[i].Location.DisplayName.ToLower().Contains("chanyaky") == true && roomluisname.ToLower().Contains("chanyaky") == true)
                                     {
                                         botanswer = roomluisname + " is not available";
                                     }
@@ -2685,80 +2324,38 @@ namespace Demo12_DevBotAuth4EchoBot.Bots
 
                                     }
 
-                                    //*******************************************
-
-                                    //if (roomluisname.ToLower().Contains("tulip") == true && calendarViewtry[i].Location.DisplayName.ToLower().Contains("tulip") == true)
-                                    //{
-                                    //    botanswer1 = roomluisname + " is not available";
-                                    //}
-                                    //else
-                                    //{
-                                    //    botanswer1 = roomluisname + " is  available";
-
-                                    //}
-
-
-                                    //if (calendarViewtry[i].Location.DisplayName.ToLower().Contains("lotus") == true && roomluisname.ToLower().Contains("lotus") == true)
-                                    //{
-                                    //    botanswer1 = roomluisname + " is not available";
-                                    //    // await turnContext.SendActivityAsync(CreateActivityWithTextAndSpeak($" " + botanswer1), cancellationToken);
-                                    //}
-                                    //else
-                                    //{
-                                    //    botanswer1 = roomluisname + " is  available";
-                                    //}
-                                    //if (calendarViewtry[i].Location.DisplayName.ToLower().Contains("snowdrop") == true && roomluisname.ToLower().Contains("snowdrop") == true)
-                                    //{
-                                    //    botanswer1 = roomluisname + " is not available";
-                                    //}
-                                    //else
-                                    //{
-                                    //    botanswer1 = roomluisname + " is  available";
-                                    //}
-
-                                    //if (calendarViewtry[i].Location.DisplayName.ToLower().Contains("chanyaky") == true && roomluisname.ToLower().Contains("chanyaky") == true)
-                                    //{
-                                    //    botanswer1 = roomluisname + " is not available";
-                                    //}
-                                    //else
-                                    //{
-                                    //    botanswer1 = roomluisname + " is  available";
-
-                                    //}
-
-
-
-
-                                    //*********************
-
                                 }
 
-
-
-                            }
-                            else
-                            {
-
-
-                                botanswer = roomluisname + " is   available";
-
-
-                               // await turnContext.SendActivityAsync(CreateActivityWithTextAndSpeak($" " + botanswer1), cancellationToken);
-
                             }
 
-                            //await turnContext.SendActivityAsync(CreateActivityWithTextAndSpeak($" " + botanswer1), cancellationToken);
+                        }
+                        else
+                        {
+
+
+                            botanswer = roomluisname + " is   available";
 
                         }
 
-                       // await turnContext.SendActivityAsync(CreateActivityWithTextAndSpeak($" " + botanswer), cancellationToken);
+
+
+
+
+                                   
+
+
+
+
+
 
                     }
+                            
 
                     break;
             }
-            await turnContext.SendActivityAsync(CreateActivityWithTextAndSpeak($" " + botanswer), cancellationToken);
 
+
+            await turnContext.SendActivityAsync(CreateActivityWithTextAndSpeak($" " + botanswer), cancellationToken);
 
         }
 
@@ -2805,8 +2402,9 @@ namespace Demo12_DevBotAuth4EchoBot.Bots
             using (HttpClient client = new HttpClient())
             {
 
-                string LuisAppID = "11838aa9-ca07-4c63-9206-7e422f3a50bd";/* "16ac5ae9-a86f-4210-93fe-010b387e1262";*///"ab167f38-5367-421f-8e2c-cfa91d36ca19";//// "11838aa9-ca07-4c63-9206-7e422f3a50bd";//"3d87a0d1-a41c-4c2c-b48b-a9bd8c308e61";//"5e376704-da8b-406e-9c68-a7ec15ea29eb";//"6473c60c-64d4-4b4e-895c-946deb9f27bd";//"0e4f70af-c3af-414b-a28f-e9861b17d3ab";//"6473c60c-64d4-4b4e-895c-946deb9f27bd";//"6f963293-9c7a-4393-87eb-9d9a50459662";//ConfigurationManager.AppSettings["aad:LuisAppId"];//["aad:LuisAppId"];
-                string LuisSecretKey = "619b66fbeed048e586e81793f5a69925"; /*"619b66fbeed048e586e81793f5a69925";*///"e7301392690a40e387f2a300899d9a4d";////"05b8b88ba1b7480388969d921f5d908c";//"e7301392690a40e387f2a300899d9a4d";//"9f0672f0109247928a0144ca4a910219";//"619b66fbeed048e586e81793f5a69925";//ConfigurationManager.AppSettings["aad:LuisSecretKey"];
+                string LuisAppID = "4ddf4dea-2a2d-43f1-8c7c-bd57e5fec74e";// "9945e320 -dd96-4e24-a8f8-482d06756acd";//"d5e2fec8-e3c3-4d3d-bcc2-eaea8530e8a2"; //"11838aa9-ca07-4c63-9206-7e422f3a50bd";/* "16ac5ae9-a86f-4210-93fe-010b387e1262";*///"ab167f38-5367-421f-8e2c-cfa91d36ca19";//// "11838aa9-ca07-4c63-9206-7e422f3a50bd";//"3d87a0d1-a41c-4c2c-b48b-a9bd8c308e61";//"5e376704-da8b-406e-9c68-a7ec15ea29eb";//"6473c60c-64d4-4b4e-895c-946deb9f27bd";//"0e4f70af-c3af-414b-a28f-e9861b17d3ab";//"6473c60c-64d4-4b4e-895c-946deb9f27bd";//"6f963293-9c7a-4393-87eb-9d9a50459662";//ConfigurationManager.AppSettings["aad:LuisAppId"];//["aad:LuisAppId"];
+                string LuisSecretKey = "0c856eabd50c4dd0ba0078c08d0ee158";//"784fb0f86ac24d6cb3b75e74191419e5";
+//";//"619b66fbeed048e586e81793f5a69925"; /*"619b66fbeed048e586e81793f5a69925";*///"e7301392690a40e387f2a300899d9a4d";////"05b8b88ba1b7480388969d921f5d908c";//"e7301392690a40e387f2a300899d9a4d";//"9f0672f0109247928a0144ca4a910219";//"619b66fbeed048e586e81793f5a69925";//ConfigurationManager.AppSettings["aad:LuisSecretKey"];
                 string RequestURI = "https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/" + LuisAppID + "?verbose=true&timezoneOffset=0&subscription-key=" + LuisSecretKey + "&q=" + Query;
 
                 HttpResponseMessage msg = await client.GetAsync(RequestURI);
